@@ -60,6 +60,9 @@ RUN useradd -U -m superset && \
         superset==${SUPERSET_VERSION} && \
     rm requirements.txt
 
+RUN sed -i /usr/local/lib/python3.6/site-packages/pydruid/db/api.py -e "s/{'query': query}/{'query': query, 'context': {'sqlTimeZone':'Australia\/Melbourne'}}/g"
+RUN cat /usr/local/lib/python3.6/site-packages/pydruid/db/api.py
+
 # Configure Filesystem
 COPY superset /usr/local/bin
 VOLUME /home/superset \
